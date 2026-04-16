@@ -1,26 +1,223 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* ── Dark theme (default) ── */
+:root,
+[data-theme="dark"] {
+  --background: #050910;
+  --foreground: #edf1f7;
+  --surface: #101621;
+  --surface-strong: #151e2a;
+  --muted: #96a0b4;
+  --line: #202938;
+  --accent: #ff6058;
+  --accent-strong: #ff7a63;
+  --highlight: #d4b09c;
+
+  --slide-bg-from: rgba(18, 24, 35, 0.92);
+  --slide-bg-to: rgba(10, 15, 23, 0.92);
+  --card-bg: rgba(16, 22, 33, 0.72);
+  --card-border: rgba(255, 255, 255, 0.08);
+  --card-border-strong: rgba(255, 255, 255, 0.07);
+  --pill-bg: rgba(255, 255, 255, 0.03);
+  --text-body: rgba(255, 255, 255, 0.82);
+  --text-muted-strong: rgba(255, 255, 255, 0.74);
+  --text-faint: rgba(255, 255, 255, 0.40);
+  --text-faintest: rgba(255, 255, 255, 0.36);
+  --nav-bg: rgba(6, 11, 18, 0.80);
+
+  --page-grad-1: rgba(255, 96, 88, 0.14);
+  --page-grad-2: rgba(0, 183, 255, 0.08);
+  --page-grad-3: rgba(255, 96, 88, 0.06);
+  --page-grad-base-from: #04070d;
+  --page-grad-base-to: #060b12;
+}
+
+/* ── Light theme ── */
+[data-theme="light"] {
+  --background: #f5f6fa;
+  --foreground: #0d1117;
+  --surface: #ffffff;
+  --surface-strong: #eef0f5;
+  --muted: #6b7280;
+  --line: #d1d5db;
+  --accent: #e03a30;
+  --accent-strong: #c82d24;
+  --highlight: #9a6a50;
+
+  --slide-bg-from: rgba(255, 255, 255, 0.94);
+  --slide-bg-to: rgba(240, 242, 248, 0.94);
+  --card-bg: rgba(255, 255, 255, 0.85);
+  --card-border: rgba(0, 0, 0, 0.08);
+  --card-border-strong: rgba(0, 0, 0, 0.06);
+  --pill-bg: rgba(0, 0, 0, 0.03);
+  --text-body: rgba(13, 17, 23, 0.84);
+  --text-muted-strong: rgba(13, 17, 23, 0.68);
+  --text-faint: rgba(13, 17, 23, 0.44);
+  --text-faintest: rgba(13, 17, 23, 0.36);
+  --nav-bg: rgba(245, 246, 250, 0.88);
+
+  --page-grad-1: rgba(224, 58, 48, 0.07);
+  --page-grad-2: rgba(0, 130, 200, 0.05);
+  --page-grad-3: rgba(224, 58, 48, 0.04);
+  --page-grad-base-from: #edf0f7;
+  --page-grad-base-to: #f5f6fa;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-surface: var(--surface);
+  --color-surface-strong: var(--surface-strong);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-accent: var(--accent);
+  --color-accent-strong: var(--accent-strong);
+  --color-highlight: var(--highlight);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+  transition: background 0.35s ease, color 0.35s ease;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--accent) 30%, white);
+}
+
+/* ── Page shell ── */
+.page-shell {
+  background:
+    radial-gradient(circle at 20% 12%, var(--page-grad-1), transparent 18%),
+    radial-gradient(circle at 78% 18%, var(--page-grad-2), transparent 18%),
+    radial-gradient(circle at 50% 80%, var(--page-grad-3), transparent 24%),
+    linear-gradient(180deg, var(--page-grad-base-from) 0%, var(--background) 44%, var(--page-grad-base-to) 100%);
+  position: relative;
+  transition: background 0.35s ease;
+}
+
+/* star dots — hidden in light mode */
+.page-shell::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.65;
+  background-image:
+    radial-gradient(circle at 3% 10%, rgba(255,255,255,0.45) 0 1px, transparent 1.6px),
+    radial-gradient(circle at 14% 28%, rgba(255,96,88,0.3) 0 1px, transparent 1.6px),
+    radial-gradient(circle at 31% 14%, rgba(255,255,255,0.3) 0 1px, transparent 1.4px),
+    radial-gradient(circle at 48% 8%, rgba(255,255,255,0.28) 0 1px, transparent 1.4px),
+    radial-gradient(circle at 64% 22%, rgba(0,183,255,0.22) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 82% 12%, rgba(255,255,255,0.34) 0 1px, transparent 1.4px),
+    radial-gradient(circle at 91% 31%, rgba(255,96,88,0.24) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 9% 54%, rgba(255,255,255,0.28) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 27% 64%, rgba(0,183,255,0.2) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 43% 48%, rgba(255,255,255,0.24) 0 1px, transparent 1.4px),
+    radial-gradient(circle at 57% 72%, rgba(255,96,88,0.2) 0 1px, transparent 1.5px),
+    radial-gradient(circle at 71% 58%, rgba(255,255,255,0.3) 0 1px, transparent 1.4px),
+    radial-gradient(circle at 88% 76%, rgba(0,183,255,0.18) 0 1px, transparent 1.5px);
+  transition: opacity 0.35s ease;
+}
+
+[data-theme="light"] .page-shell::before {
+  opacity: 0;
+}
+
+/* ── Slide frame ── */
+.slide-frame {
+  background: linear-gradient(180deg, var(--slide-bg-from) 0%, var(--slide-bg-to) 100%);
+  box-shadow:
+    0 30px 90px rgba(0, 0, 0, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(16px);
+  transition: background 0.35s ease, box-shadow 0.35s ease;
+}
+
+[data-theme="light"] .slide-frame {
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.10),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* ── Animations ── */
+.animate-float {
+  animation: floatY 5.8s ease-in-out infinite;
+}
+
+.animate-soft-pulse {
+  animation: softPulse 2.6s ease-in-out infinite;
+}
+
+.animate-progress {
+  animation: progressGlow 3.2s ease-in-out infinite;
+}
+
+.animate-rise-fade {
+  animation: riseFade 0.8s ease forwards;
+  opacity: 0;
+}
+
+.flow-dot {
+  animation: flowDot 4.5s linear infinite;
+}
+
+.orbit-node {
+  transform: translate(var(--tx), var(--ty));
+  animation: orbitPulse 5s ease-in-out infinite;
+}
+
+@keyframes floatY {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-10px); }
+}
+
+@keyframes softPulse {
+  0%, 100% { transform: scale(1);    box-shadow: 0 0 0 rgba(255, 96, 88, 0.35); }
+  50%       { transform: scale(1.18); box-shadow: 0 0 18px rgba(255, 96, 88, 0.65); }
+}
+
+@keyframes progressGlow {
+  0%, 100% { filter: brightness(1);    box-shadow: 0 0 0 rgba(255, 96, 88, 0.2); }
+  50%       { filter: brightness(1.15); box-shadow: 0 0 18px rgba(255, 96, 88, 0.28); }
+}
+
+@keyframes riseFade {
+  0%   { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes flowDot {
+  0%   { left: 28px;             opacity: 0; }
+  10%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { left: calc(100% - 28px); opacity: 0; }
+}
+
+@keyframes orbitPulse {
+  0%, 100% { transform: translate(var(--tx), var(--ty)) scale(1);    box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+  50%       { transform: translate(var(--tx), var(--ty)) scale(1.07); box-shadow: 0 14px 36px rgba(255,96,88,0.12); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-float,
+  .animate-soft-pulse,
+  .animate-progress,
+  .animate-rise-fade,
+  .flow-dot,
+  .orbit-node {
+    animation: none !important;
+  }
 }
