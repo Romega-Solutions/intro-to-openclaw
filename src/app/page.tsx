@@ -1,7 +1,7 @@
 "use client";
 
 import { useRef, useState } from "react";
-import { motion, useInView, Variants } from "framer-motion";
+import { motion, useInView, type TargetAndTransition, Variants } from "framer-motion";
 import Image from "next/image";
 import { ThemeToggle } from "@/components/theme-provider";
 
@@ -305,13 +305,13 @@ const popIn: Variants = {
   }),
 };
 
-const hoverLift = {
+const hoverLift: TargetAndTransition = {
   y: -6,
   scale: 1.015,
-  transition: { duration: 0.18, ease: [0.22, 1, 0.36, 1] },
+  transition: { duration: 0.18, ease: [0.22, 1, 0.36, 1] as const },
 };
 
-const hoverGlow = {
+const hoverGlow: TargetAndTransition = {
   boxShadow: "0 18px 36px rgba(255,96,88,0.12)",
 };
 
